@@ -43,10 +43,11 @@ class MyClient(discord.Client):
         After you made a new account, these are the next steps:
         - Send your user name  & password
         - Send a picture of your receipt after placing the order
-        - Send a refund fee payment of 70% off
+        - Send a refund fee payment of 60% off or 40% of the total order (via CashApp, BTC, ApplePay)
         - Once your food arrives, please wait 15 minutes after delivery, once 15 mins passed, ping me here and I'll refund you
         
         :smiley: We look forward to serving you!
+        **ONCE YOU ARE READY TO ORDER PLEASE REACT WITH :thumbsup:**
         """
         grubhub = """
         Hi! This is the Grubhub Refund Service
@@ -65,6 +66,7 @@ class MyClient(discord.Client):
         & then the refund will be processed back to your credit card :)
 
         We look forward to serving you! :smile:
+        **ONCE YOU ARE READY TO ORDER PLEASE REACT WITH :thumbsup:**
         """
 
         pizza = """
@@ -82,6 +84,7 @@ class MyClient(discord.Client):
         Lastly, these are organically grown pizza accounts made by collecting points from our friends :)
 
         We look forward to serving you! :smile:
+        **ONCE YOU ARE READY TO ORDER PLEASE REACT WITH :thumbsup:**
         """
 
         blacklist = [609365980711354387, 608477963503140903, 608829750059991041, 608629202920669187, 608842648903483392, 608473616102981632, 609228196608737330, 608480316289712128, 609729795906863111, 608466353330061323, 608487863549427733, 609430100097630218, 609436856526045234, 609365925724160001, 609148676912316446, 609262611669975061, 608476484931420161, 608489313709326337, 608844703995002890, 608830017232961539, 608476361815752724, 608486819809460246, 608476296598650910, 608829329371037706, 609015582645288960, 608475769097945100, 608872074383196180, 608829846579314710, 608479896603328523, 608629264043999282, 608940595783663626, 609154707025428636, 608842738456068096, 608487570590007307, 609227559229587476, 608489314581741594, 608487923922501682, 609161544927936513, 608726287871115285, 608475820616450079, 608489313168130068, 608481643522555924, 608475810306850866, 608485222455050241, 609231020256002058, 608489315273670656, 608480656808476726, 608476373459140608, 609230752994820098, 609626372507435008]
@@ -90,25 +93,31 @@ class MyClient(discord.Client):
                 await reaction.message.delete()
                 msg = discord.Embed(title="DoorDash", color=0x00ff00)
                 msg.add_field(name = "Instructions", value= doordash, inline=False)
-                await reaction.message.channel.send(embed = msg)
+                x = await reaction.message.channel.send(embed = msg)
                 newName = str(user.name) + "-DoorDash" 
-                await reaction.message.channel.edit(name = newName)                
+                await reaction.message.channel.edit(name = newName)
+                await asyncio.sleep(1)
+                await x.add_reaction("👍")                
                 
             elif reaction.emoji == "🍕" and reaction.count == 2:
                 await reaction.message.delete()
                 msg = discord.Embed(title="Dominos Pizza", color=0xff8c00)
                 msg.add_field(name = "Instructions", value= pizza, inline=False)
-                await reaction.message.channel.send(embed = msg)
+                x = await reaction.message.channel.send(embed = msg)
                 newName = str(user.name) + "-Pizza" 
-                await reaction.message.channel.edit(name = newName)   
+                await reaction.message.channel.edit(name = newName)
+                await asyncio.sleep(1)
+                await x.add_reaction("👍")   
 
             elif reaction.emoji == "🍔" and reaction.count == 2:
                 await reaction.message.delete()
                 msg = discord.Embed(title="GrubHub", color=0x1e90ff)
                 msg.add_field(name = "Instructions", value= grubhub, inline=False)
-                await reaction.message.channel.send(embed = msg)
+                x = await reaction.message.channel.send(embed = msg)
                 newName = str(user.name) + "-GrubHub" 
-                await reaction.message.channel.edit(name = newName)   
+                await reaction.message.channel.edit(name = newName)
+                await asyncio.sleep(1)
+                await x.add_reaction("👍")   
             '''
             elif reaction.emoji == "💰" and reaction.count == 2:
                 await reaction.message.delete()
@@ -118,6 +127,9 @@ class MyClient(discord.Client):
                 newName = str(user.name) + "-Other" 
                 await reaction.message.channel.edit(name = newName)   
             '''
+        if reaction.emoji == "👍" and reaction.count == 2:
+            await reaction.message.channel.send('<@157690092863881216> <@318102691220029450> <@600097837597982749>')
+            await reaction.message.channel.send('Vendors have been notified, please wait for them to assist you!')
 
     async def on_message(self, message):
         #INSTRUCTION VARS
@@ -127,7 +139,7 @@ class MyClient(discord.Client):
         After you made a new account, these are the next steps:
         - Send your user name  & password
         - Send a picture of your receipt after placing the order
-        - Send a refund fee payment of 70% off
+        - Send a refund fee payment of 60% off or 40% of the total order (via CashApp, BTC, ApplePay)
         - Once your food arrives, please wait 15 minutes after delivery, once 15 mins passed, ping me here and I'll refund you
         
         :smiley: We look forward to serving you!
