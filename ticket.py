@@ -1,5 +1,6 @@
 import random
 import discord
+import asyncio
 
 TOKEN = "NjAyMDMxOTk4NTA0MDA5NzI4.XU5Gsg.fvtmqzwU0T-gZYg5lo3SFhIy2lE"
 
@@ -23,6 +24,7 @@ class MyClient(discord.Client):
         """
 
         print(channel, "had just been created")
+        await asyncio.sleep(1)
         msg = discord.Embed(title="Deal Hub Assistant", color=0x00ff00)
         msg.add_field(name = "Menu", value = menu, inline = False)
         x = await channel.send(embed = msg)
