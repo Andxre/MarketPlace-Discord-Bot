@@ -24,15 +24,16 @@ class MyClient(discord.Client):
         """
 
         print(channel, "had just been created")
-        await asyncio.sleep(1)
-        msg = discord.Embed(title="Deal Hub Assistant", color=0x00ff00)
-        msg.add_field(name = "Menu", value = menu, inline = False)
-        x = await channel.send(embed = msg)
+        if channel.category_id == 609931723777507348:
+            await asyncio.sleep(1)
+            msg = discord.Embed(title="Deal Hub Assistant", color=0x00ff00)
+            msg.add_field(name = "Menu", value = menu, inline = False)
+            x = await channel.send(embed = msg)
 
-        await x.add_reaction("🍟")
-        await x.add_reaction("🍕")
-        await x.add_reaction("🍔")
-        #await x.add_reaction("💰")
+            await x.add_reaction("🍟")
+            await x.add_reaction("🍕")
+            await x.add_reaction("🍔")
+            #await x.add_reaction("💰")
     
     
     async def on_reaction_add(self, reaction, user):
@@ -88,7 +89,8 @@ class MyClient(discord.Client):
         """
 
         blacklist = [609365980711354387, 608477963503140903, 608829750059991041, 608629202920669187, 608842648903483392, 608473616102981632, 609228196608737330, 608480316289712128, 609729795906863111, 608466353330061323, 608487863549427733, 609430100097630218, 609436856526045234, 609365925724160001, 609148676912316446, 609262611669975061, 608476484931420161, 608489313709326337, 608844703995002890, 608830017232961539, 608476361815752724, 608486819809460246, 608476296598650910, 608829329371037706, 609015582645288960, 608475769097945100, 608872074383196180, 608829846579314710, 608479896603328523, 608629264043999282, 608940595783663626, 609154707025428636, 608842738456068096, 608487570590007307, 609227559229587476, 608489314581741594, 608487923922501682, 609161544927936513, 608726287871115285, 608475820616450079, 608489313168130068, 608481643522555924, 608475810306850866, 608485222455050241, 609231020256002058, 608489315273670656, 608480656808476726, 608476373459140608, 609230752994820098, 609626372507435008]
-        if reaction.message.channel.id not in blacklist:
+        #categoryBL = [608829750059991041, 608489313168130068, 608487863549427733, 608466353330061323, 608476296598650910, 609230752994820098, 609931723777507348, 609365925724160001, 608475769097945100, 608726287871115285, 610284957184557066]
+        if reaction.message.channel.id not in blacklist and reaction.message.channel.category_id == 609931723777507348: # and in Ticket Category
             if reaction.emoji == "🍟" and reaction.count == 2:
                 await reaction.message.delete()
                 msg = discord.Embed(title="DoorDash", color=0x00ff00)
@@ -203,12 +205,12 @@ class MyClient(discord.Client):
             await message.channel.send(embed = msg)
 
         if message.content.startswith('$dev'):
-            channelList = []
-            for server in self.guilds:
-                if server.name == 'Deal Hub':
-                    for channel in server.channels:
-                        channelList.append(channel.id)
-            print(channelList)
+            categoryList = []
+            for guild in self.guilds:
+                if guild.name == "Deal Hub":
+                    for c in guild.categories:
+                        categoryList.append(c.id)
+            print(categoryList)
 
                         
     
