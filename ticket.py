@@ -19,8 +19,22 @@ class MyClient(discord.Client):
         :pizza: - Dominos Pizza
         :fries: - DoorDash
         :hamburger: - GrubHub
-        :moneybag: - Other Services
+        
         *If you would like a custom bot like this for your server contact Skwiid#0001*
+        """
+        movie = """
+        This is the Fandango Movie Ticket Service!
+        If your theater can be found on fandango we can order you cheap tickets.
+        $4 - 1 Movie Ticket
+        $3 - 4 or more Movie Tickets
+
+        Before pressing ready please fill out this template:
+        Theater Name: 
+        Movie:
+        Time:
+        Seats:
+
+        **Once you have sent this information in the ticket react with 👍 to ping movie dealers**
         """
 
         print(channel, "had just been created")
@@ -33,7 +47,15 @@ class MyClient(discord.Client):
             await x.add_reaction("🍟")
             await x.add_reaction("🍕")
             await x.add_reaction("🍔")
-            #await x.add_reaction("💰")
+        
+        if channel.category_id == 610284957184557066:
+            await asyncio.sleep(1)
+            msg = discord.Embed(title= "Deal Hub Assistant", color = 0x1F35F1)
+            msg.add_field(name = "Movie Tickets", value = movie, inline = False)
+            x = await channel.send(embed = msg)
+
+            await x.add_reaction("👍")
+            
     
     
     async def on_reaction_add(self, reaction, user):
@@ -129,9 +151,16 @@ class MyClient(discord.Client):
                 newName = str(user.name) + "-Other" 
                 await reaction.message.channel.edit(name = newName)   
             '''
-        if reaction.emoji == "👍" and reaction.count == 2:
-            await reaction.message.channel.send('<@157690092863881216> <@318102691220029450> <@600097837597982749>')
-            await reaction.message.channel.send('Vendors have been notified, please wait for them to assist you!')
+        if reaction.message.channel.category_id == 609931723777507348: 
+            if reaction.emoji == "👍" and reaction.count == 2:
+                await reaction.message.channel.send('<@157690092863881216> <@318102691220029450> <@600097837597982749>')
+                await reaction.message.channel.send('Vendors have been notified, please wait for them to assist you!')
+        elif reaction.message.channel.category_id == 610284957184557066:
+             if reaction.emoji == "👍" and reaction.count == 2:
+                await reaction.message.channel.send('<@501232992686047242> <@157690092863881216>')
+                await reaction.message.channel.send('Movie Dealers have been notified!')
+                newName = str(user.name) + "-Movie" 
+                await reaction.message.channel.edit(name = newName)
 
     async def on_message(self, message):
         #INSTRUCTION VARS
@@ -211,6 +240,7 @@ class MyClient(discord.Client):
                     for c in guild.categories:
                         categoryList.append(c.id)
             print(categoryList)
+        
 
                         
     
