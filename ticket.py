@@ -59,8 +59,27 @@ class MyClient(discord.Client):
     
     
     async def on_reaction_add(self, reaction, user):
-         #INSTRUCTION VARS
+        #INSTRUCTION VARS
+
         doordash = """
+        Doordash Service
+        --------------------------------
+        :green_apple: - DoorDash Refund Service
+        :apple: - DoorDash Buy 4 You Service
+
+        **React to choose your preferred service!**
+        """ 
+
+        grubhub = """
+        GrubHub Service
+        --------------------------------
+        :lemon: - GrubHub Refund Service
+        :pear: - GrubHub Buy 4 You Service
+
+        **React to choose your preferred service!**
+        """ 
+
+        doordashRefund = """
         For Doordash please make sure to make a new account before ordering (this is to ensure great history on your account and 100% success with me!)
 
         After you made a new account, these are the next steps:
@@ -72,7 +91,23 @@ class MyClient(discord.Client):
         :smiley: We look forward to serving you!
         **ONCE YOU ARE READY TO ORDER PLEASE REACT WITH :thumbsup:**
         """
-        grubhub = """
+        doordashb4u = """
+        Doordash Buy4u instructions RATE IS 60% OFF
+        - You place your order with us in ticket. 
+        - You send a payment fee first. 
+        - Order will be placed. 
+        - We will continue to update you as order comes. 
+        - $50 minimum , $150 maximum 
+        - In order to continue using our service we require you to take a picture of the food when it arrives clearly and post in vouches. 
+          If not, you’ll be kicked. 
+
+        :smiley: We look forward to serving you!
+        **ONCE YOU ARE READY TO ORDER PLEASE REACT WITH :thumbsup:**
+
+
+        """
+
+        grubhubRefund = """
         Hi! This is the Grubhub Refund Service
 
         You're allowed to order food from $1-150 as there is a 100% success rate! 
@@ -87,6 +122,19 @@ class MyClient(discord.Client):
         Store Number:
 
         & then the refund will be processed back to your credit card :)
+
+        We look forward to serving you! :smile:
+        **ONCE YOU ARE READY TO ORDER PLEASE REACT WITH :thumbsup:**
+        """
+
+        grubhubb4u = """
+        GrubHub RATE IS 50% OFF
+        - You make a ticket and place an order. 
+        - Minimum must be $50 and maxmium can be $200
+        - You pay fee first through Cashapp, Amazon Gift Card, Apple Pay or BTC
+        - We process your order and update you 
+        - In order to continue using our service we require you to take a picture of the food when it arrives clearly and post in vouches. 
+          If not, you’ll be kicked
 
         We look forward to serving you! :smile:
         **ONCE YOU ARE READY TO ORDER PLEASE REACT WITH :thumbsup:**
@@ -121,7 +169,8 @@ class MyClient(discord.Client):
                 newName = str(user.name) + "-DoorDash" 
                 await reaction.message.channel.edit(name = newName)
                 await asyncio.sleep(1)
-                await x.add_reaction("👍")                
+                await x.add_reaction("🍏")
+                await x.add_reaction("🍎")                
                 
             elif reaction.emoji == "🍕" and reaction.count == 2:
                 await reaction.message.delete()
@@ -141,20 +190,51 @@ class MyClient(discord.Client):
                 newName = str(user.name) + "-GrubHub" 
                 await reaction.message.channel.edit(name = newName)
                 await asyncio.sleep(1)
-                await x.add_reaction("👍")   
-            '''
-            elif reaction.emoji == "💰" and reaction.count == 2:
+                await x.add_reaction("🍋")
+                await x.add_reaction("🍐")   
+
+        #Refund or Buy4You
+        if reaction.message.channel.category_id == 609931723777507348:
+            #DOORDASH CHOICES
+            if reaction.emoji == "🍏" and reaction.count == 2:
                 await reaction.message.delete()
-                msg = discord.Embed(title="Other Services", color=0x1e90ff)
-                msg.add_field(name = "Services Provided", value= other, inline=False)
-                await reaction.message.channel.send(embed = msg)
-                newName = str(user.name) + "-Other" 
-                await reaction.message.channel.edit(name = newName)   
-            '''
+                msg = discord.Embed(title="DoorDash Refund Service", color=0xff8c00)
+                msg.add_field(name = "Instructions", value= doordashRefund, inline=False)
+                x = await reaction.message.channel.send(embed = msg)
+                await x.add_reaction("👍")
+
+            elif reaction.emoji == "🍎" and reaction.count == 2:
+                await reaction.message.delete()
+                msg = discord.Embed(title="DoorDash Buy 4 You Service", color=0xff8c00)
+                msg.add_field(name = "Instructions", value= doordashb4u, inline=False)
+                x = await reaction.message.channel.send(embed = msg)
+                await x.add_reaction("👍")
+
+            #GRUBHUB CHOICES
+            if reaction.emoji == "🍋" and reaction.count == 2:
+                await reaction.message.delete()
+                msg = discord.Embed(title="GrubHub Refund Service", color=0xff8c00)
+                msg.add_field(name = "Instructions", value= grubhubRefund, inline=False)
+                x = await reaction.message.channel.send(embed = msg)
+                await x.add_reaction("👍")
+
+            elif reaction.emoji == "🍐" and reaction.count == 2:
+                await reaction.message.delete()
+                msg = discord.Embed(title="GrubHub Buy 4 You Service", color=0xff8c00)
+                msg.add_field(name = "Instructions", value= grubhubb4u, inline=False)
+                x = await reaction.message.channel.send(embed = msg)
+                await x.add_reaction("👍")
+
+
+
+
+
+        #FOOD 
         if reaction.message.channel.category_id == 609931723777507348: 
             if reaction.emoji == "👍" and reaction.count == 2:
-                await reaction.message.channel.send('<@157690092863881216> <@318102691220029450> <@600097837597982749>')
+                await reaction.message.channel.send('<@&608508009206775844> <@&608507934028333076> <@&608478222845345823> <@&608888673509048349>')
                 await reaction.message.channel.send('Vendors have been notified, please wait for them to assist you!')
+        #MOVIES
         elif reaction.message.channel.category_id == 610284957184557066:
              if reaction.emoji == "👍" and reaction.count == 2:
                 await reaction.message.channel.send('<@501232992686047242> <@157690092863881216>')
@@ -211,6 +291,17 @@ class MyClient(discord.Client):
         We look forward to serving you! :smile:
         """
 
+        vouch = """
+        Thank you for ordering from us! If you were satisfied with your order please go to the
+        <#608473616102981632> channel!
+        Please make vouches as descriptive as possible!
+
+        Vouch Example:
+        Vouch for **(Vendor Name)**, they provided me with **(Service Provided)**. (Description of experience and satisfaction level).
+
+        Please do not leave short vouches as it does not help our server <3
+        """
+
         #END INSTRUCTION VARS
 
         print('Message from {0.author}: {0.content}'.format(message))
@@ -240,6 +331,11 @@ class MyClient(discord.Client):
                     for c in guild.categories:
                         categoryList.append(c.id)
             print(categoryList)
+        
+        if message.content.startswith('-vouch'):
+            msg = discord.Embed(title = "How to Vouch", color = 0xF85FBE)
+            msg.add_field(name = "Instructions", value = vouch, inline =False)
+            await message.channel.send(embed = msg)
         
 
                         
