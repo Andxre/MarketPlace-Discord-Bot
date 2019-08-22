@@ -1,1 +1,1 @@
-worker: python ticket.py
+worker: python rewrite.py
