@@ -20,10 +20,12 @@ for f in dirList:
 
 
 
+
 @bot.event
 async def on_ready():
     print('Logged on as {0}!'.format(bot.user))
     print('Discord Py Version: {}'.format(discord.__version__))
+    bot.remove_command('help')
 
 @bot.command()
 @has_permissions(administrator=True)
@@ -48,13 +50,17 @@ async def unload_error(error, ctx):
     if isinstance(error, CheckFailure):
         await ctx.send("You don't have access to that command!")
 
-
-
 @bot.command()
 @has_permissions(administrator=True)
 async def cogs(ctx):
     x = ", ".join(cogList)
     await ctx.send(x)
+
+@bot.command()
+async def help(ctx):
+    msg = discord.Embed(title = "Help",color=0x1e90ff)
+    msg.add_field(name = "Available Commands", value = "/n".join(var.commands), inline=False)
+    await ctx.send(embed = msg)
         
 
 bot.load_extension('foodCmds')

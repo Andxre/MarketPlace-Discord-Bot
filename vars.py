@@ -137,3 +137,10 @@ Vouch for **(Vendor Name)**, they provided me with **(Service Provided)**. (Desc
 
 Please do not leave short vouches as it does not help our server <3
 """
+
+commands = """
+$doordash - Instructions on placing a doordash order
+$grubhub - Instructions on placing a grubhub order
+$pizza - Instructions on placing a pizza order
+$vouch - Instructions on the proper way to vouch after a successful order
+"""
