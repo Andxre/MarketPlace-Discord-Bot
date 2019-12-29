@@ -7,7 +7,7 @@ from discord.ext.commands import has_permissions, CheckFailure
 import os
 
 bot = commands.Bot(command_prefix = '$')
-token = "NjAyMDMxOTk4NTA0MDA5NzI4.XU5Gsg.fvtmqzwU0T-gZYg5lo3SFhIy2lE"
+token = "" #Insert Bot token here
 
 currentDir = os.getcwd()
 cogList = []
